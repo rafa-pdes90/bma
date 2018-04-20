@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 
 services:
   db:
@@ -11,8 +11,9 @@ services:
     environment:
       MYSQL_DATABASE: "melhorqueofb"
     volumes:
-      - melhorqueofb_data:c:/mysql/data
+      - "melhorqueofb_data:c:/mysql/data"
     tty: true
+    restart: on-failure
   
   django:
     build: .
@@ -22,6 +23,7 @@ services:
     depends_on:
       - db
     tty: true
+    restart: on-failure
       
 networks:
   default:
