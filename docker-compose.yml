@@ -11,7 +11,8 @@ services:
     environment:
       MYSQL_DATABASE: "melhorqueofb"
     volumes:
-      - dbdata:c:/mysql/data
+      - melhorqueofb_data:c:/mysql/data
+    tty: true
   
   django:
     build: .
@@ -28,4 +29,5 @@ networks:
       name: nat
       
 volumes:
-  dbdata:
+  melhorqueofb_data:
+    external: true
