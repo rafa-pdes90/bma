@@ -1,0 +1,84 @@
+.usuario_perfil {
+  display: flex;
+  flex-direction: column;
+  position:relative;
+}
+	
+.usuario_perfil .right {
+  float: right;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+.usuario_perfil section {
+  width: 85%;
+  border: 25px solid green;
+  padding: 25px;
+  margin: 25px;
+  background:  gray;
+}
+
+.perfil_description img {
+  max-width: 25%;
+  height: auto;
+  margin: auto;
+  float: right;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+.lista_amigos a { color:#0000FF; }
+.lista_amigos a:visited { color:#800080; }
+.lista_amigos a:hover { color:#008000; }
+.lista_amigos a:active { color:#FF0000; }
+
+.lista_amigos img {
+  width: auto;
+  max-height: 128px;
+  margin: auto;
+  border: 3px solid #73AD21;
+}
+
+.amigo_caption p {
+  width: 140px;
+  text-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lista_eventos a { color:#0000FF; }
+.lista_eventos a:visited { color:#800080; }
+.lista_eventos a:hover { color:#008000; }
+.lista_eventos a:active { color:#FF0000; }
+
+.lista_eventos img {
+  width: auto;
+  max-height: 224px;
+  margin: auto;
+}
+
+.evento_caption p {
+  width: 240px;
+  text-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thumbnail {
+  border: none;
+  background-color:transparent;
+}
+
+.botao_notificacao {
+  width: 150px;
+}
+
+.del_conta {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

@@ -1,0 +1,27 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/usuario_lista.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="usuarios_all">
+    <section>
+      <div class="row">
+        {% for pessoa in pessoas %}
+          <div class="col-md-3">
+            <div class="thumbnail" style="height: 150px">
+              <a target="_blank" href="{% url 'usuario_perfil' pk=pessoa.idpessoa %}">
+                <img src="{{ pessoa.retrato_link }}" class="img-circle" alt="{{ pessoa.getNickname }}">
+                <div class="pessoa_caption" align="middle"><p>{{ pessoa.getNickname }} ({{ pessoa.idade }})</p></div>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+        
+      <div class="clearfix"></div>
+    </section>
+  </div>
+{% endblock %}

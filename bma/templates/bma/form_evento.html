@@ -1,0 +1,69 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/form_evento.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h3>{{ titulo_inicial }}</h3>
+  <div class="form_evento"> 
+    <form method="POST" class="evento-form" enctype="multipart/form-data">{% csrf_token %}
+      <label for="fname">Evento: </label>
+      <input type="text" id="fname" name="nome" placeholder="Decide ai!" value="{{ evento_form.nome.value|default_if_none:'' }}" required></br>
+
+      <label for="tipo">Tipo</label>
+      <select id="tipo" name="evento_tipo_idevento_tipo" required>
+      <option value="" selected disabled required>Qual ocasião</option> 
+      {% for tipo in tipos %}
+        <option value="{{ tipo.idevento_tipo }}" {% if evento_form.evento_tipo_idevento_tipo.value == tipo.idevento_tipo %}selected{% endif %}>{{ tipo.nome }}</option>
+      {% endfor %}
+      </select></br>
+      <!---
+      <label>Visualização do evento?</label>
+      <input type="radio" name="visibilidade" value="publico" checked> Público
+      <input type="radio" name="visibilidade" value="privado"> Privado
+      </br>
+      --->
+      <label for="dataevento">Quando vai ser?</label>
+      {% if evento_form.data_inicio.value|date == '' %}
+        <input type="date" id="dataevento" name="data_inicio"  value="{{ evento_form.data_inicio.value }}" required>
+      {% else %}
+        <input type="date" id="dataevento" name="data_inicio"  value="{{ evento_form.data_inicio.value|date:"Y-m-d" }}" required>
+      {% endif %}</br>
+
+      <label for="horaInicio">Que horas começa?</label>
+      {% if evento_form.horario_inicio.value|date == '' %}
+        <input type="time" id="horaInicio" name="horario_inicio" value="{{ evento_form.horario_inicio.value }}">
+      {% else %}
+        <input type="time" id="horaInicio" name="horario_inicio" value="{{ evento_form.horario_inicio.value|date:"H:i" }}">
+      {% endif %}
+      *Opcional</br>
+      
+      <label for="horaFim">Vai até que horas? (*opcional)</label>
+      {% if evento_form.horario_fim.value|date == '' %}
+        <input type="time" id="horaFim" name="horario_fim" value="{{ evento_form.horario_fim.value }}">
+      {% else %}
+        <input type="time" id="horaFim" name="horario_fim" value="{{ evento_form.horario_fim.value|date:"H:i" }}">
+      {% endif %}
+      *Opcional</br>
+
+
+      <label for="local">Local: </label>
+      <input type="text" id="local" name="local" placeholder="Onde???" value="{{ evento_form.local.value|default_if_none:'' }}">
+      *Opcional</br>
+     
+      </br><label>{{ mensagem_imagem }}</label> (*Opcional)
+      <div class="input-group">
+          <span class="input-group-btn">
+              <span class="btn btn-default btn-file">
+                  Procurar… <input type="file" id="imgInp" name="img_upload" accept="image/*">
+              </span>
+          </span>
+          <input type="text" class="form-control" readonly>
+      </div></br>
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+{% endblock %}

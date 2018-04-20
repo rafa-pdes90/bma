@@ -1,0 +1,79 @@
+body {
+  color: Blue;
+  background-color:GhostWhite;
+}
+
+/****************************************************/
+
+.page-header {
+  margin-top: 0;
+}
+.page-header ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+.page-header-menu {
+  float: left;
+}
+.page-header-menu a {
+  position: relative;
+  display: inline-block;
+  color: White;
+  text-align: center;
+  font-size: 15px;
+  padding: 14px 16px;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  transition-duration: 0.4s;
+}
+.page-header-menu a:hover {
+  color: Yellow;
+  background-color: MidnightBlue;
+}
+.page-header-menu a:active { color: IndianRed; }
+
+.page-header-button {
+  float: left;
+}
+
+.icone-dinamico {
+  clear: both;
+  position: absolute;
+  top: 7px;
+  right: 8px;
+}
+.icone-dinamico a {
+  transition-duration: 0.4s;
+}
+.icone-dinamico span {
+  color: Chartreuse;
+}
+
+.top-greetings {
+  color: SandyBrown;
+  font-size: 16px;
+}
+
+.content-container {
+  padding: 20px;
+}
+.content-container h1, h2, h3, h4 {
+    font-family: 'Lobster', cursive;
+	text-align: left;
+}
+
+.page-footer footer {
+	text-align: center;
+	color: black;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}

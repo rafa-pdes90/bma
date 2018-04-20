@@ -1,0 +1,16 @@
+.usuarios_all a { color:#0000FF; }
+.usuarios_all a:visited { color:#800080; }
+.usuarios_all a:hover { color:#008000; }
+.usuarios_all a:active { color:#FF0000; }
+
+.usuarios_all img {
+  cursor: pointer;
+  width: auto;
+  max-height: 128px;
+  margin: auto;
+}
+
+.usuarios_all .thumbnail {
+  border: none;
+  background-color:transparent;
+}

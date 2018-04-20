@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    container_name: melhorqueofb_db
+    # First run (initdb):
+    build: ./MySQL
+    # Subsequent runs
+    #image: rafaelpdes/mysql:5.6
+    command: MySQL
+    environment:
+      MYSQL_DATABASE: "melhorqueofb"
+    volumes:
+      - dbdata:c:/mysql/data
+  
+  django:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000 --settings=docker_settings
+    ports:
+      - '8080:8000'
+    depends_on:
+      - db
+    tty: true
+      
+networks:
+  default:
+    external:
+      name: nat
+      
+volumes:
+  dbdata:

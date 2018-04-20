@@ -1,0 +1,37 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="main_page">
+    <img src="{% static 'imagens/logo.png' %}" alt="logo bora marcar algo">
+     
+    <section>
+      <h1>Eventos atuais</h1>
+      <h3>O que está acontecendo por ai</h3>
+
+      <div class="row">
+        {% for evento in eventos %}
+          <div class="col-md-3">
+            <div class="thumbnail" style="height: 300px">
+              <a target="_blank" href="{% url 'evento_perfil' pk=evento.idevento %}">
+                <img class="img-responsive" src="{{ evento.banner_link }}" alt="{{ evento.nome }}">
+                <div class="caption" align="middle"><p>{{ evento.nome }}</p></div>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      
+      <div class="clearfix"></div>
+
+      <div style="padding:6px;">
+        <p> Não está achando o evento que você quer participar?</p>
+        <p> então inscreva-se no nosso site e organize o seu evento! </p>
+      </div>
+    </section>
+  </div>
+{% endblock %}

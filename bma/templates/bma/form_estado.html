@@ -1,0 +1,26 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/form_pessoa.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="form_pessoa">
+    <form method="POST" class="estado-form">{% csrf_token %}    
+      <label for="estado">Estado</label>
+      <select id="estado" name="Estado" required>
+      <option value="" selected disabled>Selecione o Estado</option>
+      <option value="0"> Nenhum </option>
+      {% for estado in estados %}
+        <option value="{{ estado.id }}" {% if inst_id == estado.id %}selected{% endif %}>{{ estado.nome }}</option>
+      {% endfor %}
+      </select><br>
+      <input type="submit" value="Submit">
+    </form>
+    <div class"botao_pular">
+      <a href="{% url 'usuario_perfil' pk=pk %}" class="btn btn-default"> Pular </a>
+    </div>
+  </div>
+  
+{% endblock %}

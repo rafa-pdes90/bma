@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-br">
+    <head>
+      <meta charset="utf-8">
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+		
+      <title>BMA? Bó Bó Bó</title>
+		
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+      <link rel="stylesheet" href="{% static 'css/base.css' %}">
+      {% block page_head %}
+      {% endblock %}
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		
+      <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    </head>
+    
+    <body>
+      <div class="page-header">
+        <ul>
+          <li class="page-header-menu"><a href="{% url 'home' %}">Home</a></li>
+          {% if user.is_not_new %}
+            <li class="page-header-menu"><a href="{% url 'usuario_profile' pk=user.id %}">Meu Perfil</a></li>
+          {% endif %}
+          <li class="page-header-menu"><a href="{% url 'listar_usuarios' %}">Usuários</a></li>
+          <li class="page-header-menu"><a href="{% url 'listar_eventos' %}">Eventos</a></li>
+          <li class="page-header-button">
+            {% block page_header_button %}
+            {% endblock %}
+          </li>
+          <li class="icone-dinamico">
+            {% block icone_dinamico %}
+            {% endblock %}
+          </li>
+        </ul>
+      </div>
+      
+      <div class="content-container">
+        {% block content %}
+        {% endblock %}
+      </div>
+      
+      <div class="page-footer">
+        <footer>
+          <p>Created by: Mari Ogawa & Rafa Parente 2017</p>
+          <p>Reclamações: <a href="mailto:prof.serra@gmail.com">
+          Serra Mail</a>.</p>
+        </footer>
+      </div>
+    </body>
+</html>

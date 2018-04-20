@@ -1,0 +1,72 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/evento_lista.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% now "Y-m-d" as data_atual %}
+  <div class="eventos_all">
+    <section style="padding: 20px">
+      <div class="row">
+        {% for evento in eventos %}
+          {% if evento.data_inicio|date:"Y-m-d" == data_atual %}
+            {% ifchanged %} <h1>Agora!</h1> {% endifchanged %}
+              <div class="col-md-3">
+                <div class="thumbnail" style="height: 300px">
+                  <a target="_blank" href="{% url 'evento_perfil' pk=evento.idevento %}">
+                    <img class="img-responsive" src="{{ evento.banner_link }}" alt="{{ evento.nome }}">
+                    <div class="caption" align="middle"><p>{{ evento.nome }}</p></div>
+                  </a>
+                </div>
+              </div>
+          {% else %}
+            {% ifchanged %} <div class="clearfix"></div> {% endifchanged %}
+            {% ifchanged %} </ul><h1> {{ evento.AnoEvento }} </h1> {% endifchanged %}
+            {% ifchanged %}
+              </ul>
+              <h2 style="padding-left: 28px"> {{ evento.data_inicio|date:"F" }} </h2>
+              <ul class="list-group" style="padding-left: 28px">
+            {% endifchanged %}
+            <li class="list-group-item">
+              <div class="listar_nomes">
+                  <strong><a href="{% url 'evento_perfil' pk=evento.idevento %}">{{ evento.nome }}</a></strong> - ({{ evento.data_inicio|date:"l, j" }})
+              </div>
+              <strong>{{ evento.participantes_count }}</strong> pessoa(s) confirmada(s)!
+            </li>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+    {% if eventos_old|length > 0 %}
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" href="#collapse1">Anteriores</a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse">
+            <ul class="list-group">
+              {% for evento in eventos_old reversed %}
+                <li class="list-group-item">
+                  <div class="listar_nomes">
+                      <strong><a href="{% url 'evento_perfil' pk=evento.idevento %}">{{ evento.nome }}</a></strong> - ({{ evento.data_inicio }})
+                  </div>
+                  {% if evento.participantes_count == 0 %}
+                    <small>Ninguém compareceu... :(</small>
+                  {% elif evento.participantes_count == 1 %}
+                    <strong>{{ evento.participantes_count }}</strong> pessoa compareceu!
+                  {% else %}
+                    <strong>{{ evento.participantes_count }}</strong> pessoas compareceram!
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

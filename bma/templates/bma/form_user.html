@@ -1,0 +1,21 @@
+{% extends 'bma/base_simples.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/form_pessoa.css' %}">
+{% endblock %}
+
+{% block icone_dinamico %}
+  <a href="{% url 'login' %}" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-lock"></span> Login</a>
+{% endblock %}
+            
+{% block content %}
+  <h3>{{ titulo_inicial }}</h3>
+  <div class="form_pessoa">
+    <form method="POST" class="user-form">{% csrf_token %}
+      {{ user_form.as_p }}
+      
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+{% endblock %}

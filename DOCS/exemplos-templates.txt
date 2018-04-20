@@ -1,0 +1,41 @@
+﻿<!--
+    <div class="page-header">
+        <a href="{% url 'pessoa_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+        <h1><a href="">Lista de rolezeiros</a></h1>
+    </div>
+    
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block dfsgsgg %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+    <h1>Um título</h1> - para o título mais importante
+    <h2>Um sub-título</h2> para um título um nível abaixo
+    <h3>Um sub-sub-título</h3> ... e por aí vai, até <h6>
+    <em>texto</em> enfatiza seu texto
+    <strong>text</strong> enfatiza fortemente seu texto
+    <br /> pula para a próxima linha (você não pode colocar nada dentro de br)
+    <a href="https://djangogirls.org">link</a> cria um link
+    <a href="https://djangogirls.org" target="_blank">link</a> cria um link e abre numa nova aba (blank)
+    <ul><li>primeiro item</li><li>segundo item</li></ul> cria uma lista, exatamente como essa!
+    <div></div> define uma seção da página
+    <p>{{ post.text|linebreaksbr }}</p> |linebreaksbr está passando o texto do post por um filtro, convertendo quebras de linha em parágrafos.
+
+
+    <ul>
+      <li><a href="default.asp">Home</a></li>
+      <li><a href="news.asp">News</a></li>
+      <li><a href="contact.asp">Contact</a></li>
+      <li><a href="about.asp">About</a></li>
+    </ul>
+
+    <div class="links_teste">
+        <a href="https://boramarcaralgo.pythonanywhere.com" id="link_to_real_page" target="_blank">Site real</a>
+        </br><a href="https://boramarcaralgo.pythonanywhere.com" class="external_link" target="_blank">Aqui também</a>
+    </div>
+-->

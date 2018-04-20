@@ -1,0 +1,113 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/evento_perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="evento_perfil">
+    <h1> {{ perfil.nome }} </h1>
+    
+      <form method="POST" class="sign_event">{% csrf_token %}
+        {% if visitante != None %}
+          {% for membro in perfil.lista_membros %}
+            {% if membro.idpessoa == visitante.idpessoa %}
+              {% if membro.codigo == 'status_participante' %}
+                {% if perfil.is_not_old %}
+                  <button type="submit" name="botao_evento" value="convidar" class="btn btn-info"><span class="glyphicon glyphicon-envelope"></span> Convidar amigos!</button>
+                {% endif %}
+                <button type="submit" name="botao_evento" value="sair" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Sair do evento!</button>
+              {% endif %}
+              {% if perfil.is_not_old and membro.codigo == 'status_convidado' %}
+                <button type="submit" name="botao_evento" value="aceitar" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceitar convite pro evento!</button>
+                <button type="submit" name="botao_evento" value="recusar" class="btn btn-warning"><span class="glyphicon glyphicon-trash"></span> Recusar convite pro evento!</button>
+              {% endif %}
+              {% if perfil.is_not_old and membro.codigo == 'status_recusado' %}
+                <button type="submit" name="botao_evento" value="participar" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Participar do evento!</button>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% if perfil.is_not_old and visitante not in perfil.lista_membros %}
+            <button type="submit" name="botao_evento" value="participar" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Participar do evento!</button>
+          {% endif %}
+          {% if perfil.is_not_old and visitante.idpessoa == perfil.organizador_idpessoa.idpessoa %}
+            <button type="submit" name="botao_evento" value="convidar" class="btn btn-info"><span class="glyphicon glyphicon-envelope"></span> Convidar amigos!</button>
+          {% endif %}
+        {% endif %}
+      </form>
+    
+    <section class="perfil_description">
+      <img src="{{ perfil.banner_link }}" width="1920" height="2560" alt="propaganda do evento " title="banner" />
+      <p> Organizador(a): <a href="{% url 'usuario_perfil' pk=perfil.organizador_idpessoa.idpessoa %}" class="link_organizador">{{ perfil.organizador_idpessoa.getNickname  }}</a></p>
+      <p> Local: {{ perfil.local|default:"Brasil" }} </p>
+      {% if perfil.data_fim == perfil.data_inicio %}
+        <p> Data: {{ perfil.data_inicio|date:"d/m/Y" }} </p>
+      {% else %}
+        <p> Data: {{ perfil.data_inicio|date:"d/m/Y" }} a {{ perfil.data_fim|date:"d/m/Y" }} </p>
+      {% endif %}
+      {% if perfil.is_not_old %}
+        {% if perfil.is_now %}
+          <p> Status: Ocorrendo AGORA!</p>
+        {% else %}
+          <p> Status: Em breve!</p>
+        {% endif %}
+      {% else %}
+        <p> Status: Encerrado!</p>
+      {% endif %}
+      {% if perfil.ativos_count > 0 %}
+        <p> Média de idade dos participantes: {{ med_idade }} anos</p>
+        <p> Pessoas confirmadas/convidadas: {{ perfil.participantes_per }}% - {{ perfil.convidados_per }}% (Total de pessoas: {{ perfil.ativos_count }}) </p>
+      {% endif %}
+      {% if visitante != None and visitante.idpessoa == perfil.organizador_idpessoa.idpessoa or user.is_superuser %}
+        <a class="btn btn-default" href="{% url 'evento_edicao' pk=perfil.idevento %}"><span class="glyphicon glyphicon-pencil"></span> Editar evento</a>
+      {% endif %}
+    </section>
+    
+    <h1> Quem vai? </h1>
+    <section class="lista_membros">
+      <div class="row">
+        {% for membro in perfil.lista_membros %}
+          {% if membro.codigo == "status_participante" %}
+            <div class="col-md-2">
+              <div class="thumbnail" style="height: 150px">
+                <a target="_blank" href="{% url 'usuario_perfil' pk=membro.idpessoa %}">
+                  <img src="{{ membro.retrato_link }}" class="img-circle" alt="{{ membro.getNickname }}">
+                  <div class="membro_caption" align="middle"><p>{{ membro.getNickname }}</p></div>
+                </a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="clearfix"></div>
+    </section>
+
+    <h1> Quem está convidado? </h1>
+    <section class="lista_membros">
+      <div class="row">
+        {% for membro in perfil.lista_membros %}
+          {% if membro.codigo == "status_convidado" %}
+            <div class="col-md-2">
+              <div class="thumbnail" style="height: 150px">
+                <a target="_blank" href="{% url 'usuario_perfil' pk=membro.idpessoa %}">
+                  <img src="{{ membro.retrato_link }}" class="img-circle" alt="{{ membro.getNickname }}">
+                  <div class="membro_caption" align="middle"><p>{{ membro.getNickname }}</p></div>
+                </a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="clearfix"></div>
+    </section>
+    
+    {% if visitante != None and visitante.idpessoa == perfil.organizador_idpessoa.idpessoa or user.is_superuser %}
+      <form method="POST" class="del_evento">{% csrf_token %}
+        <button type="submit" name="botao_evento" value="excluir" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir meu evento! </button>
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}

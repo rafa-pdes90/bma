@@ -1,0 +1,55 @@
+{% extends 'bma/base_simples.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/form_pessoa.css' %}">
+{% endblock %}
+
+{% block icone_dinamico %}
+  <strong class="top-greetings"> Hello {{ user.username }}! </strong>
+  <small><a href="{% url 'logout' %}" class="btn btn-primary btn-md"> Log out</a></small>
+{% endblock %}
+
+{% block content %}
+  <h3>{{ titulo_inicial }}</h3>
+  <div class="form_pessoa">
+    <form method="POST" class="pessoa-form" enctype="multipart/form-data">{% csrf_token %}
+      <label for="nickname">Apelido</label>
+      <input type="text" id="nname" name="nickname" placeholder="seu apelido..." value="{{ pessoa_form.nickname.value|default_if_none:'' }}">
+      *Opcional</br>
+      
+      <label for="fname">Primeiro Nome</label>
+      <input type="text" id="fname" name="nome" placeholder="Fulano" value="{{ pessoa_form.nome.value|default_if_none:'' }}" required><br>
+
+      <label for="lname">Sobrenome</label>
+      <input type="text" id="lname" name="sobrenome" placeholder="de tal" value="{{ pessoa_form.sobrenome.value|default_if_none:'' }}" required><br>
+
+      <label for="dataNasci">Data de Nascimento:</label>
+      {% if pessoa_form.data_nascimento.value|date == '' %}
+        <input type="date" id="dataNascimento" name="data_nascimento"  value="{{ pessoa_form.data_nascimento.value }}" required>
+      {% else %}
+        <input type="date" id="dataNascimento" name="data_nascimento"  value="{{ pessoa_form.data_nascimento.value|date:"Y-m-d" }}" required>
+      {% endif %}</br>
+      
+      <label for="email">email</label>
+      <input type="email" id="email" name="email" placeholder="fulano@servidor.com.br" value="{{ pessoa_form.email.value|default_if_none:'' }}" required><br>
+
+      <label>Você se considera como?</label>
+      {% for genero in generos %}
+        <input type="radio" id="genero_{{ genero.idpessoa_genero_sexual }}" name="pessoa_genero_sexual_idpessoa_genero_sexual" value="{{ genero.idpessoa_genero_sexual }}" {% if pessoa_form.pessoa_genero_sexual_idpessoa_genero_sexual.value|add:"0" == genero.idpessoa_genero_sexual %}checked{% endif %} required> {{ genero.nome }}
+      {% endfor %}</br>
+      
+      </br><label>{{ mensagem_imagem }}</label> (*Opcional)
+      <div class="input-group">
+          <span class="input-group-btn">
+              <span class="btn btn-default btn-file">
+                  Procurar… <input type="file" id="imgInp" name="img_upload" accept="image/*">
+              </span>
+          </span>
+          <input type="text" class="form-control" readonly>
+      </div></br>
+      
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+{% endblock %}

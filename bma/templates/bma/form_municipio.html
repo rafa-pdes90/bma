@@ -1,0 +1,25 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/form_pessoa.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="form_pessoa">
+    <form method="POST" class="municipio-form">{% csrf_token %}    
+      <label for="municipio">Municipio</label>
+      <select id="municipio" name="Municipio" required>
+      <option value="" selected disabled required>Selecione a municipio</option>
+      <option value="0"> Nenhum </option>
+      {% for municipio in municipios %}
+        <option value="{{ municipio.id }}" {% if inst_id == municipio.id %}selected{% endif %}>{{ municipio.nome }}</option>
+      {% endfor %}
+      </select><br>
+      <input type="submit" value="Submit">
+    </form>
+    <div class"botao_pular">
+      <a href="{% url 'usuario_perfil' pk=pk %}" class="btn btn-default"> Pular </a>
+    </div>
+  </div>
+{% endblock %}

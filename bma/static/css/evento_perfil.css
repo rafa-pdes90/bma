@@ -1,0 +1,63 @@
+.link_organizador { text-decoration: underline; }
+
+.evento_perfil {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.evento_perfil .right {
+  float: right;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+.evento_perfil section {
+  width: 85%;
+  border: 25px solid green;
+  padding: 25px;
+  margin: 25px;
+  background:  lightgray;
+}
+
+.perfil_description img {
+  max-width: 25%;
+  height: auto;
+  margin: auto;
+  float: right;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+.lista_membros a { color:#0000FF; }
+.lista_membros a:visited { color:#800080; }
+.lista_membros a:hover { color:#008000; }
+.lista_membros a:active { color:#FF0000; }
+
+.lista_membros img {
+  width: auto;
+  max-height: 128px;
+  margin: auto;
+  border: 3px solid #73AD21;
+}
+
+.membro_caption p {
+  width: 140px;
+  text-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thumbnail {
+  border: none;
+  background-color:transparent;
+}
+
+.del_evento {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

@@ -1,0 +1,152 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/usuario_perfil.css' %}">
+{% endblock %}
+
+
+{% block content %}
+  <div class="usuario_perfil">
+    <h1> {{ perfil.getNickname  }} </h1>
+    
+    {% if visitante != None %}
+      {% if visitante.idpessoa == perfil.idpessoa %}
+        <div class"botao_notificacao">
+          <a href="{% url 'usuario_notificacoes' pk=visitante.idpessoa %}" class="btn btn-primary">Notificações: <span class="badge">{{ notificacoes_count }}</span></a>
+        </div>
+      {% else %}
+        <form method="POST" class="add_friend">{% csrf_token %}
+          {% if visitante in perfil.lista_amigos %}
+            {% for amigo in perfil.lista_amigos %}
+              {% if amigo == visitante %}
+                {% if amigo.status == 0 %}
+                  {% if perfil.idpessoa == amigo.pessoa_idpessoa2 %}
+                    <button type="submit" name="botao_amizade" value="cancelar" class="btn btn-warning"><span class="glyphicon glyphicon-minus"></span> Cancelar pedido de amizade!</button>
+                  {% else %}
+                    <button type="submit" name="botao_amizade" value="aceitar" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Aceitar pedido de amizade!</button>
+                    <button type="submit" name="botao_amizade" value="recusar" class="btn btn-warning"><span class="glyphicon glyphicon-trash"></span> Recusar pedido de amizade!</button>
+                  {% endif %}
+                {% else %}
+                  <button type="submit" name="botao_amizade" value="desfazer" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Desfazer amizade!</button>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <button type="submit" name="botao_amizade" value="adicionar" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Adicionar como amigo!</button>
+          {% endif %}
+        </form>
+      {% endif %}
+    {% endif %}
+    
+    <section class="perfil_description">
+      <img src="{{ perfil.retrato_link }}" width="1920" height="2560" alt="Foto da pessoa" title="foto perfil" />
+      <h2> {{ perfil.getNomeCompleto }} </h2>
+      <p> Idade: {{ perfil.idade }} </p>
+      <p> Gênero: {{ perfil.pessoa_genero_sexual_idpessoa_genero_sexual.nome }} </p>
+      {% if user.id == perfil.user_id or user.is_superuser %}
+        <a class="btn btn-default" href="{% url 'usuario_edicao' pk=perfil.idpessoa %}"><span class="glyphicon glyphicon-pencil"></span> Editar perfil</a>
+      {% endif %}
+      <h3> Local: </h3>
+      <p> {{ perfil.endereco_idendereco }} </p>
+      {% if user.id == perfil.user_id or user.is_superuser %}
+        <a class="btn btn-default" href="{% url 'usuario_edicao_estado' pk=perfil.idpessoa %}"><span class="glyphicon glyphicon-pencil"></span> Editar endereço</a>
+      {% endif %}
+    </section>
+    
+    <h1> Amigos! </h1>
+    <section class="lista_amigos">
+      <div class="row">
+        {% for amigo in perfil.lista_amigos %}
+          {% if amigo.status == True %}
+            <div class="col-md-2">
+              <div class="thumbnail" style="height: 150px">
+                <a target="_blank" href="{% url 'usuario_perfil' pk=amigo.idpessoa %}">
+                  <img src="{{ amigo.retrato_link }}" class="img-circle" alt="{{ amigo.getNickname }}">
+                  <div class="amigo_caption" align="middle"><p>{{ amigo.getNickname }}</p></div>
+                </a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="clearfix"></div>
+    </section>
+
+    <h1> Eventos! </h1>
+    <section class="lista_eventos">
+      {% if perfil.lista_eventos_org|length > 0 %}
+        <h2> Próximos organizados: </h2>
+        <div class="row">
+          {% for evento in perfil.lista_eventos_org %}
+            <div class="col-md-4">
+              <div class="thumbnail" style="height: 250px">
+                <a target="_blank" href="{% url 'evento_perfil' pk=evento.idevento %}">
+                  <img src="{{ evento.banner_link }}" class="img-rounded" alt="{{ evento.nome }}">
+                  <div class="evento_caption" align="middle"><p>{{ evento.nome }}</p></div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    
+      {% if perfil.lista_eventos|length > 0 %}
+        <h2> Próximos: </h2>
+        <div class="row">
+          {% for evento in perfil.lista_eventos %}
+            <div class="col-md-4">
+              <div class="thumbnail" style="height: 250px">
+                <a target="_blank" href="{% url 'evento_perfil' pk=evento.idevento %}">
+                  <img src="{{ evento.banner_link }}" class="img-rounded" alt="{{ evento.nome }}">
+                  <div class="evento_caption" align="middle"><p>{{ evento.nome }}</p></div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      {% if perfil.lista_eventos_old|length > 0 %}
+        <h2> Encerrados: </h2>
+        <div class="row">
+          {% for evento in perfil.lista_eventos_old %}
+            <div class="col-md-3">
+              <div class="thumbnail" style="height: 250px">
+                <a target="_blank" href="{% url 'evento_perfil' pk=evento.idevento %}">
+                  <img src="{{ evento.banner_link }}" class="img-rounded" alt="{{ evento.nome }}">
+                  <div class="evento_caption" align="middle"><p>{{ evento.nome }}</p></div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      {% if perfil.lista_eventos_org_old|length > 0 %}
+        <h2> Organizados anteriormente: </h2>
+        <div class="row">
+          {% for evento in perfil.lista_eventos_org_old %}
+            <div class="col-md-3">
+              <div class="thumbnail" style="height: 250px">
+                <a target="_blank" href="{% url 'evento_perfil' pk=evento.idevento %}">
+                  <img src="{{ evento.banner_link }}" class="img-rounded" alt="{{ evento.nome }}">
+                  <div class="evento_caption" align="middle"><p>{{ evento.nome }}</p></div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      <div class="clearfix"></div>
+    </section>
+    
+    {% if visitante != None and visitante.idpessoa == perfil.idpessoa or user.is_superuser %}
+      <form method="POST" class="del_conta">{% csrf_token %}
+        <button type="submit" name="botao_amizade" value="excluir" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Excluir minha conta! </button>
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/usuario_notificacoes.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% for convite in convites_de_evento %}
+      <div class="alert alert-info alert-dismissable fade in">
+        <strong> NOVO EVENTO! </strong>Você foi convidado para o evento <a href="{% url 'evento_perfil' pk=convite.idevento %}" class="alert-link" target="_blank"> {{ convite.nome }} </a>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      </div>
+    {% endfor %}
+    
+    {% for pedido in pedidos_de_amizade %}
+      <div class="alert alert-info alert-dismissable fade in">
+        <strong> AMIGOS!? </strong><a href="{% url 'usuario_perfil' pk=pedido.idpessoa %}" class="alert-link" target="_blank"> {{ pedido.getNomeCompleto }}</a> deseja ser seu amigo(a)!
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'bma/base.html' %}
+{% load static %}
+
+{% block page_head %}
+  <link rel="stylesheet" href="{% static 'css/evento_convidar.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1> Convide seus amigos para "{{ perfil.nome }}" </h1>
+  <form method="POST" class="convite-form">{% csrf_token %}
+    <div class="row">
+      <div class="form-group">
+        {% for amigo in lista_amigos %}
+          <div class="col-md-2">
+            <label align="right">
+              <input type="checkbox" name="amigo" value="{{ amigo.idpessoa }}">
+              <img src="{{ amigo.retrato_link }}" alt="{{ amigo.getNickname }}" class="img-thumbnail img-check"><br>{{ amigo.getNomeCompleto }}
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="clearfix"></div>
+    
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}
